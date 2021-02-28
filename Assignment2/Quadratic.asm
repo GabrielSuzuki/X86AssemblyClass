@@ -55,7 +55,7 @@ input2prompt db "Please enter the three floating point coefficients of a quadrat
 three_float_format db "%lf %lf %lf",0
 stringform db "%s%s%s",0
 NoAString db "This is not a quadratic equation. You may run this program again.", 10, 0
-equation db "The equation is %lfx^2 + %lfx + %lf = 0.0",10,0
+equation db "The equation is %5.10lfx^2 + %5.10lfx + %5.10lf = 0.0",10,0
 error_in_input db "Invalid input data detected. You may run this program again.",10,0
 newmessage db "The number is %5.3lf",10,0
 temp db "temp", 10,0,0
