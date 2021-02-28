@@ -1,38 +1,42 @@
-;****************************************************************************************************************************
-;Program name: "PerimeterOfRectangle".  This program demonstrates how to find the width, length, perimeter, and average     *
-;length of a side based on 2 inputted doubles.  Copyright (C) 2021 Gabriel Suzuki.                                          *
-;                                                                                                                           *
-;This file is part of the software program "PerimeterOfRectangle".                                                          *
-;PerimeterOfRectangle is free software: you can redistribute it and/or modify it under the terms of the GNU General Public  *
-;License version 3 as published by the Free Software Foundation.                                                            *
-;PerimeterOfRectangle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied *
-;warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.     *
-;A copy of the GNU General Public License v3 is available here:  <https:;www.gnu.org/licenses/>.                            *
-;****************************************************************************************************************************
+;***************************************************************************************************************************
+;Program name: "QuadraticRootFinder".  This program demonstrates how to validate floats inputted from scanf and use them to*
+;solve the roots of a quadratic equation. Copyright (C) 2021 Gabriel Suzuki.                                               *
+;                                                                                                                          *
+;This file is part of the software program "QuadraticRootFinder".                                                          *
+;QuadraticRootFinder is free software: you can redistribute it and/or modify it under the terms of the GNU General Public  *
+;License version 3 as published by the Free Software Foundation.                                                           *
+;QuadraticRootFinder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied *
+;warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.    *
+;A copy of the GNU General Public License v3 is available here:  <https:;www.gnu.org/licenses/>.                           *
+;***************************************************************************************************************************
 
 
 
 
-;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3**
+;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3
 ;
 ;Author information
 ;  Author name: Gabriel Suzuki
 ;  Author email: suzukig@csu.fullerton.edu
 ;
 ;Program information
-;  Program name: PerimeterOfRectangle
-;  Programming languages: One modules in C and one module in X86
-;  Date program began: 2021-Jan-30
-;  Date of last update: 2021-Feb-09
-;  Date of reorganization of comments: 2021-Feb-09
-;  Files in this program: rectangle.c, assignmentOne.asm
+;  Program name: QuadraticRootFinder
+;  Programming languages: One modules in C and one module in X86 and 2 in C++
+;  Date program began: 2021-Feb-20
+;  Date of last update: 2021-Feb-28
+;  Date of reorganization of comments: 2021-Feb-28
+;  Files in this program: second_degree.c, Quadratic.asm, Quad_Library.cpp, isfloat.cpp
 ;  Status: Finished.  The program was tested extensively with no errors in Xubuntu19.04.
 ;
+;Purpose
+; Learn how to validate inputs and check if they are valid floats.
+; Learn how to use inputted floats to find the roots of a quadratic equation
+;
 ;This file
-;   File name: assignmentOne.asm
+;   File name: Quadratic.asm
 ;   Language: X86 with Intel syntax.
 ;   Max page width: 132 columns
-;   Assemble: nasm -f elf64 -l assignmentOne.lis -o assignmentOne.o assignmentOne.asm
+;   Assemble: nasm -f elf64 -l Quadratic.lis -o Quadratic.o Quadratic.asm
 
 
 ;===== Begin code area ================================================================================================
@@ -87,7 +91,7 @@ push qword 0
 
 
 ;Display a welcome message to the viewer.
-mov rax, 0                     ;A zero in rax means printf uses no data from xmm registers.
+mov rax, 0                     
 mov rdi, welcome               ;"This program will solve any Quadratic and return its roots"
 call printf
 
@@ -116,36 +120,36 @@ call scanf
 
 mov rax, 0
 mov rdi,rsp
-call isfloat
+call isfloat;check a
 cmp rax, 0
 je invalidRoot
 
 mov rax, 0
 mov rdi,rsp
 add rdi,520
-call isfloat
+call isfloat;check b
 cmp rax, 0
 je invalidRoot
 
 mov rax, 0
 mov rdi,rsp
 add rdi,1040
-call isfloat
+call isfloat;check b
 cmp rax, 0
 je invalidRoot
 
 mov rdi, rsp
-call atof
+call atof;convert a to float
 movsd xmm11, xmm0
 
 mov rdi, rsp
 add rdi,520
-call atof
+call atof;convert b to float
 movsd xmm12, xmm0
 
 mov rdi, rsp
 add rdi, 1040
-call atof
+call atof;convert c to float
 movsd xmm13, xmm0
 
 add rsp, 1560
@@ -169,7 +173,7 @@ equals:
 
 push qword 99
 mov rax, 3
-mov rdi, equation
+mov rdi, equation ;"The equation is %lfx^2 + %lfx + %lf = 0.0"
 movsd xmm0,xmm11
 movsd xmm1,xmm12
 movsd xmm2,xmm13
